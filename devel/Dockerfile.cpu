@@ -1,0 +1,24 @@
+ARG VERSION
+
+FROM gnosislab/arc_service:${VERSION}-base
+LABEL MAINTAINER="GnosisLab<sundar@gnosislab.in>"
+LABEL VERSION="${VERSION}"
+
+RUN apt-get update && apt-get install -y build-essential vim \ 
+  libleptonica-dev autoconf automake libtool pkg-config zlib1g-dev \
+  rm -rf /var/lib/apt/lists/*
+
+RUN pip install pip --no-cache-dir --upgrade ipykernel tqdm \
+  scikit-learn scikit-image pandas spacy seaborn matplotlib 
+
+RUN python -m ipykernel install --sys-prefix
+
+RUN wget -c https://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz -O - | tar xz && \
+  cd tesseract-4.1.1 && ./autogen.sh && ./configure --prefix=/usr  && \
+  make -j`nproc` && make install && ldconfig && \
+  cd .. && rm -rf tesseract-*
+
+ENV TESSDATA_PREFIX /usr/share/tessdata
+ADD https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata ${TESSDATA_PREFIX}/
+ADD https://github.com/tesseract-ocr/tessdata/raw/master/osd.traineddata ${TESSDATA_PREFIX}/
+RUN chmod -R 755 /usr/share/tessdata
