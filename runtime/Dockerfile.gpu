@@ -1,8 +1,6 @@
-ARG VERSION
-
 FROM nvidia/cuda:11.2.0-cudnn8-runtime-ubuntu20.04
-LABEL MAINTAINER="GnosisLab<sundar@gnosislab.in>"
-LABEL VERSION="${VERSION}"
+LABEL MAINTAINER='GnosisLab<sundar@gnosislab.in>'
+LABEL VERSION=0.3
 
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
