@@ -1,6 +1,6 @@
-# arc_dockerfiles
+# Dockerfiles
 
-All dockerfiles related to ARC products and services
+All dockerfiles related to Machine Learning products and services
 
 ## ARG Flag
 
