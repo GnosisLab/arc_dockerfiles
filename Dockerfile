@@ -3,11 +3,11 @@ FROM nvidia/cuda:11.4.2-cudnn8-runtime-ubuntu20.04
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ARG NB_USER="ai"
+ARG NB_USER="python3"
 ARG NB_UID="1000"
 ARG NB_GID="1000"
 
-# Setup the "mldev" user with root privileges.
+# Setup the "python3" user with root privileges.
 RUN \
   apt-get update && \
   apt-get install -y sudo zsh curl wget git build-essential && \
