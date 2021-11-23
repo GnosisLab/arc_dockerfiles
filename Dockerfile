@@ -42,10 +42,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
   rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m pip install --no-cache-dir --quiet --upgrade pip \
-  ipykernel jupyter_kernel_gateway jupyterlab jupyterlab_code_formatter xeus-python \
-  numpy==1.19.5 opencv-contrib-python-headless==4.5.2.54 tensorflow==2.5.0 Pillow \
-  scikit-learn scikit-image pandas spacy seaborn matplotlib PyMuPDF \
-  boto3 flask gunicorn pylint yapf isort tqdm openpyxl && \
+  ipykernel jupyter_kernel_gateway jupyterlab jupyterlab_code_formatter \ xeus-python numpy opencv-contrib-python-headless==4.5.4.60 Pillow \ tensorflow==2.7.0 scikit-learn scikit-image pandas spacy seaborn matplotlib \ PyMuPDF boto3 flask gunicorn pylint yapf isort tqdm openpyxl && \
   python -m ipykernel install --sys-prefix
 
 RUN chown -R ${NB_UID}:${NB_GID} ${HOME}
