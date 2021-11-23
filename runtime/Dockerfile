@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y wget \
   rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir --upgrade pip \
-  numpy==1.19.5 opencv-contrib-python-headless==4.5.2.54 tensorflow==2.5.0 \
+  numpy opencv-contrib-python-headless==4.5.4.60 tensorflow==2.7.0 \
   PyMuPDF flask gunicorn
 
 ENV PATH "$PATH:/sbt/bin"
