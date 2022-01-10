@@ -15,4 +15,4 @@ RUN apt-get update \
 
 RUN pip install --no-cache-dir --upgrade pip \
   numpy opencv-contrib-python-headless==4.5.4.60 tensorflow==2.7.0 \
-  PyMuPDF flask gunicorn
+  PyMuPDF flask gunicorn tqdm
