@@ -7,6 +7,11 @@ FROM nvidia/cuda:11.4.2-cudnn8-runtime-ubuntu20.04
 ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+ENV LANG en_US.utf8
+RUN apt-get update \
+  && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+  && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias ${LANG}
+
 ARG USER="python3"
 ARG UID="1000"
 ARG GID="1000"
@@ -37,7 +42,10 @@ RUN \
 RUN \
   # install python and it's library
   python3 -m pip install --no-cache-dir --quiet --upgrade pip \
-  ipykernel jupyter_kernel_gateway jupyterlab jupyterlab_code_formatter \ xeus-python numpy opencv-contrib-python-headless==4.5.4.60 Pillow \ tensorflow==2.7.0 scikit-learn scikit-image pandas spacy seaborn matplotlib \ PyMuPDF boto3 flask gunicorn pylint yapf isort tqdm openpyxl \
+  ipykernel jupyter_kernel_gateway jupyterlab jupyterlab_code_formatter \ 
+  xeus-python numpy opencv-contrib-python-headless==4.5.4.60 Pillow \
+  tensorflow==2.7.0 scikit-learn scikit-image pandas spacy seaborn matplotlib \ 
+  PyMuPDF boto3 flask gunicorn pylint yapf isort tqdm openpyxl \
   && python -m ipykernel install --sys-prefix
 
 # Setup the UID user with root privileges

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-TAG=0.4
-REPO=gnosislab/arc_service
+TAG=0.1
+REPO=gnosislab/arc
 
 CPU_BASE=ubuntu:20.04
 GPU_BASE=nvidia/cuda:11.4.2-cudnn8-runtime-ubuntu20.04
