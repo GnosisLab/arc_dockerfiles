@@ -7,7 +7,8 @@ ENV TZ=Asia/Kolkata
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ENV LANG en_US.utf8
-RUN apt-get update \
+RUN apt-get update --yes \
+  && apt-get upgrade --yes \
   && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
   && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias ${LANG}
 
@@ -18,6 +19,6 @@ RUN apt-get update \
   libleptonica-dev libtesseract-dev tesseract-ocr \
   && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir --upgrade pip \
-  numpy opencv-contrib-python-headless==4.5.5.62 tensorflow==2.7.0 \
+RUN pip install --no-cache-dir --quiet --upgrade pip \
+  numpy==1.21.4 opencv-contrib-python-headless==4.5.5.62 tensorflow==2.7.0 \
   PyMuPDF flask gunicorn tqdm
