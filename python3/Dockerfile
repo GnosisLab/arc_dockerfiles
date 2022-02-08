@@ -24,12 +24,9 @@ RUN \
   && useradd -m -s /bin/zsh -N -u $UID $USER \
   && chmod g+w /etc/passwd \
   && echo "${USER}    ALL=(ALL)    NOPASSWD:    ALL" >> /etc/sudoers \
+  && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
   # Prevent apt-get cache from being persisted to this layer.
   && rm -rf /var/lib/apt/lists/*
-
-RUN \
-  # add nodejs support
-  curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 
 RUN \
   # system library pre-requisites
@@ -67,13 +64,8 @@ RUN chown -R ${UID}:${GID} ${HOME}
 WORKDIR $HOME
 USER $UID
 
-ENV OH_MY_ZSH https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-ENV GUIDE https://raw.githubusercontent.com/GnosisLab/Coding_Guide/developement
-
+# configure oh-my-zsh
 RUN \
-  # install oh-my-zsh
-  curl -fsSL ${OH_MY_ZSH} | bash - \
-  && wget -O ${HOME}/.editorconfig ${GUIDE}/editorconfig \
-  && wget -O ${HOME}/.style.yapf ${GUIDE}/style.yapf \
-  && wget -O ${HOME}/.pylintrc ${GUIDE}/pylintrc \
-  && wget -O ${HOME}/.vimrc ${GUIDE}/vimrc
+  curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash -
+
+CMD [ "zsh" ]
