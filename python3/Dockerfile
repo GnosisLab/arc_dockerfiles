@@ -4,51 +4,88 @@
 
 FROM nvidia/cuda:11.2.0-cudnn8-runtime-ubuntu20.04
 
-ENV TZ=Asia/Kolkata
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-ENV LANG en_US.utf8
-RUN \
-  apt-get update --yes \
-  && apt-get upgrade --yes \
-  && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
-  && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias ${LANG}
+ENV \
+  LANG en_US.utf8
 
 ARG USER="python3"
 ARG UID="1000"
 ARG GID="1000"
+ARG HOME="/home/${USER}"
 
 RUN \
-  apt-get update --yes \
-  && apt-get install -y sudo zsh curl wget git build-essential \
-  && useradd -m -s /bin/zsh -N -u $UID $USER \
-  && chmod g+w /etc/passwd \
-  && echo "${USER}    ALL=(ALL)    NOPASSWD:    ALL" >> /etc/sudoers \
-  && curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+  apt-get update -y && \
+  apt-get upgrade -y && \
+  apt-get install -y sudo zsh curl wget vim git build-essential locales && \
+  localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias ${LANG} && \
+  ln -snf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime && \
+  curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+  useradd -m -s /bin/zsh -N -u $UID $USER && \
+  chmod g+w /etc/passwd && \
+  echo "${USER}    ALL=(ALL)    NOPASSWD:    ALL" >> /etc/sudoers && \
+  chown -R ${UID}:${GID} ${HOME} && \
   # Prevent apt-get cache from being persisted to this layer.
-  && rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/*
 
+# system library pre-requisites
 RUN \
-  # system library pre-requisites
-  apt-get update --yes \
-  && apt-get install -y --no-install-recommends \
-  vim fonts-dejavu autoconf automake libtool pkg-config zlib1g-dev \
-  openjdk-11-jdk-headless python3-dev python3-pip python-is-python3 nodejs \
-  libjpeg-dev libpng-dev libopenjp2-7-dev libtiff-dev \
-  libleptonica-dev libtesseract-dev tesseract-ocr \
-  && rm -rf /var/lib/apt/lists/*
+  apt-get update --yes && \
+  apt-get install -y --no-install-recommends \
+  autoconf \
+  automake \
+  fonts-dejavu \
+  libjpeg-dev \
+  libleptonica-dev \
+  libopenjp2-7-dev \
+  libpng-dev \
+  libtesseract-dev \
+  libtiff-dev \
+  libtool \
+  nodejs \
+  openjdk-11-jdk-headless \
+  pkg-config \
+  python-is-python3 \
+  python3-dev \
+  python3-pip \
+  tesseract-ocr \
+  zlib1g-dev && \
+  rm -rf /var/lib/apt/lists/*
 
+# install python and it's library
 RUN \
-  # install python and it's library
   python3 -m pip install --no-cache-dir --quiet --upgrade pip \
-  onnxruntime-gpu tf2onnx matplotlib seaborn tqdm openpyxl PyMuPDF \
-  numpy==1.21.4 pandas==1.3.4 scipy==1.7.3 scikit-learn==1.0.2 \
-  Pillow==8.4.0 opencv-contrib-python-headless==4.5.5.62 scikit-image==0.19.1 \
-  tensorflow==2.7.0 tensorflow-datasets==4.4.0 \
-  notebook jupyterlab jupyterlab_code_formatter xeus-python \
-  flask gunicorn pylint yapf isort
+  flask \
+  flatbuffers==1.12 \
+  gunicorn \
+  isort \
+  jupyterlab \
+  jupyterlab_code_formatter \
+  matplotlib \
+  notebook \
+  numpy==1.21.4 \
+  onnxruntime-gpu \
+  opencv-contrib-python-headless==4.5.5.62 \
+  openpyxl \
+  pandas==1.3.4 \
+  Pillow==8.4.0 \
+  pylint \
+  PyMuPDF \
+  scikit-image==0.19.1 \
+  scikit-learn==1.0.2 \
+  scipy==1.7.3 \
+  seaborn \
+  tensorflow-datasets==4.4.0 \
+  tensorflow==2.7.0 \
+  tf2onnx \
+  tqdm \
+  xeus-python \
+  yapf
 
-# Setup the UID user with root privileges
+# install npm dependency
+RUN \
+  npm install --global \
+  prettier
+
+# Setup $UID's home directory
 USER $UID
 ENV \
   SHELL=/bin/zsh \
@@ -56,13 +93,7 @@ ENV \
   UID=$UID \
   GID=$GID \
   HOME=/home/$USER
-
-USER root
-RUN chown -R ${UID}:${GID} ${HOME}
-
-# Setup $UID's home directory
 WORKDIR $HOME
-USER $UID
 
 # configure oh-my-zsh
 RUN \
