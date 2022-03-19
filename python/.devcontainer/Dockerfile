@@ -7,7 +7,7 @@ FROM nvidia/cuda:11.2.0-cudnn8-runtime-ubuntu20.04
 ENV \
   LANG en_US.utf8
 
-ARG USER="python3"
+ARG USER="vscode"
 ARG UID="1000"
 ARG GID="1000"
 ARG HOME="/home/${USER}"

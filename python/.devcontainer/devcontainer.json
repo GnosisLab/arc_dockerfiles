@@ -1,0 +1,42 @@
+{
+	"name": "Python 3",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": "..",
+		"args": {}
+	},
+	"runArgs": [
+		"--gpus=all"
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"python.defaultInterpreterPath": "/usr/bin/python",
+		"python.linting.enabled": true,
+		"python.linting.pylintEnabled": true,
+		"python.formatting.provider": "yapf",
+		"python.sortImports.args": [
+			"--profile",
+			"google"
+		],
+		"[python]": {
+			"editor.codeActionsOnSave": {
+				"source.fixAll": true,
+				"source.organizeImports": true
+			}
+		}
+	},
+	"extensions": [
+		"christian-kohler.path-intellisense",
+		"eamodio.gitlens",
+		"editorconfig.editorconfig",
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"ms-toolsai.jupyter",
+		"njpwerner.autodocstring",
+		"njqdev.vscode-python-typehint",
+		"visualstudioexptteam.intellicode-api-usage-examples",
+		"VisualStudioExptTeam.vscodeintellicode",
+		"wayou.vscode-todo-highlight"
+	],
+	"containerUser": "vscode"
+}
