@@ -1,0 +1,34 @@
+{
+  "name": "Node Js",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {}
+  },
+  "settings": {
+    "editor.codeActionsOnSave": [
+      "source.formatDocument",
+      "source.fixAll.eslint"
+    ],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true
+  },
+  "extensions": [
+    "christian-kohler.path-intellisense",
+    "dbaeumer.vscode-eslint",
+    "dsznajder.es7-react-js-snippets",
+    "eamodio.gitlens",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "mgmcdermott.vscode-language-babel",
+    "streetsidesoftware.code-spell-checker",
+    "visualstudioexptteam.intellicode-api-usage-examples",
+    "VisualStudioExptTeam.vscodeintellicode",
+    "wayou.vscode-todo-highlight"
+  ],
+  "remoteUser": "vscode"
+}
