@@ -57,6 +57,7 @@ RUN \
   flatbuffers==1.12 \
   gunicorn \
   isort \
+  ipykernel \
   jupyterlab \
   jupyterlab_code_formatter \
   matplotlib \
