@@ -1,7 +1,6 @@
 {
   "name": "Python 3",
   "image": "gnosislab/python3:0.1",
-  "runArgs": ["--gpus=all"],
   "settings": {
     "editor.tabSize": 2,
     "editor.formatOnPaste": true,
@@ -26,7 +25,7 @@
     "python.sortImports.args": ["--profile", "google"],
     "python.formatting.yapfArgs": [
       "--style",
-      "{based_on_style: google, indent_width: 2}"
+      "{based_on_style: google, indent_width: 2, spaces_before_comment: 2, split_before_logical_operator: true}"
     ],
     "[python]": {
       "editor.codeActionsOnSave": {

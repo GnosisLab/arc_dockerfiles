@@ -1,8 +1,5 @@
-# python developement docker
-# Heavily inspired from 
-# https://github.com/jupyter/docker-stacks/blob/master/r-notebook/Dockerfile
-
-FROM nvidia/cuda:11.2.0-cudnn8-runtime-ubuntu20.04
+ARG root=ubuntu20.04
+FROM ${root}
 
 ENV \
   LANG en_US.utf8
@@ -41,7 +38,6 @@ RUN \
   libtiff-dev \
   libtool \
   nodejs \
-  openjdk-11-jdk-headless \
   pkg-config \
   python-is-python3 \
   python3-dev \
