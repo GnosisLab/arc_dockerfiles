@@ -9,7 +9,6 @@ Also, check [Google Python guide](https://github.com/google/styleguide/blob/gh-p
 
 ```python
 pip install pylint yapf isort --user
-wget -O .style.yapf https://raw.githubusercontent.com/GnosisLab/Coding_Guide/developement/style.yapf
 wget -O .pylintrc https://google.github.io/styleguide/pylintrc
 ```
 
